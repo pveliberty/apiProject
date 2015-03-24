@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+  <entity name="Acme\DemoBundle\Entity\Contact" table="contacts">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="lastname" type="string" column="lastname" length="64" nullable="true"/>
+    <field name="firstname" type="string" column="firstname" length="64" nullable="true"/>
+    <field name="lastnameCanonical" type="string" column="lastname_canonical" length="64" nullable="true"/>
+    <field name="firstnameCanonical" type="string" column="firstname_canonical" length="64" nullable="true"/>
+    <field name="hash" type="string" column="hash" length="40" nullable="true"/>
+
+    <field name="birthdate" type="date" column="birthdate" nullable="true"/>
+    <field name="externalId" type="string" column="external_id" length="40" nullable="true"/>
+    <field name="gender" type="string" column="gender" length="16" nullable="true"/>
+    <field name="language" type="string" column="language" length="16" nullable="true"/>
+
+    <field name="status" type="string" column="status" length="16" nullable="true"/>
+    <field name="phone"  type="string" column="phone" length="32" nullable="true"/>
+    <field name="mobile" type="string" column="mobile" length="32" nullable="true"/>
+    <field name="email" type="string" column="email" length="250" nullable="true"/>
+    <field name="optIn" type="boolean" column="opt_in" nullable="false"/>
+
+    <field name="acceptPartnerCommercial" type="boolean" column="accept_partnercommercial" nullable="true"/>
+    <field name="g7crmCode" type="string" column="g7crm_code" length="250" nullable="true"/>
+    <field name="externalReference" type="string" column="external_reference" length="250" nullable="true"/>
+    <field name="preferentialCode" type="string" column="preferential_code" length="50" nullable="true"/>
+
+    <field name="partnerOptin" type="boolean" column="partner_optin" nullable="true"/>
+    <field name="dirty" type="boolean" column="dirty" nullable="false"/>
+
+    <field name="studentAt" type="datetime" column="student_at" nullable="true"/>
+    <field name="insuredAt" type="datetime" column="insured_at" nullable="true"/>
+    <field name="enrolledAt" type="datetime" column="enrolled_at" nullable="true"/>
+    <field name="renewedAt" type="datetime" column="renewed_at" nullable="true"/>
+    <field name="terminatedAt" type="datetime" column="terminated_at" nullable="true"/>
+
+    <field name="createdAt" type="datetime" column="created_at" nullable="false">
+    </field>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="false">
+    </field>
+
+
+    <many-to-many field="rights" target-entity="Acme\DemoBundle\Entity\Right" inversed-by="contacts">
+      <join-table name="contact_right">
+          <join-columns>
+              <join-column name="contact_id" referenced-column-name="id" on-delete="CASCADE" on-update="CASCADE"/>
+          </join-columns>
+          <inverse-join-columns>
+              <join-column name="right_id" referenced-column-name="id"/>
+          </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+
+
+    <one-to-many field="addresses" target-entity="Acme\DemoBundle\Entity\Address" mapped-by="contact">
+      <cascade>
+        <cascade-persist/>
+        <cascade-remove/>
+        <cascade-refresh/>
+      </cascade>
+    </one-to-many>
+
+    <field name="oldIdContact" type="string" column="oldidcontact" length="64" nullable="true"/>
+    <field name="externalGuid" type="string" column="external_guid" length="64" nullable="true"/>
+    <field name="data" column="data" type="array" nullable="true" />
+  </entity>
+</doctrine-mapping>

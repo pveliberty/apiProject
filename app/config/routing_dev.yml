@@ -1,0 +1,37 @@
+_welcome:
+    pattern:  /
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: get_notes
+        permanent: true # this for 301
+
+_demo_note:
+    resource: "@AcmeDemoBundle/Controller/NoteController.php"
+    type:     rest
+
+_demo_address:
+    resource: "@AcmeDemoBundle/Controller/Api/Rest/AddressController.php"
+    type:     rest
+
+_demo_contact:
+  resource: "@AcmeDemoBundle/Controller/Api/Rest/ContactController.php"
+  type:     rest
+
+_demo_right:
+    resource: "@AcmeDemoBundle/Controller/Api/Rest/RightController.php"
+    type:     rest
+
+_wdt:
+    resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
+    prefix:   /_wdt
+
+_profiler:
+    resource: "@WebProfilerBundle/Resources/config/routing/profiler.xml"
+    prefix:   /_profiler
+
+_configurator:
+    resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
+    prefix:   /_configurator
+
+_main:
+    resource: routing.yml

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Acme\DemoBundle\Entity\Right" table="rights"
+            >
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="shortname" type="string" column="shortname" precision="0" scale="0" nullable="true"/>
+    <field name="active" type="boolean" column="active" precision="0" scale="0" nullable="true"/>
+    <field name="configuration" type="text" column="configuration"/>
+    <many-to-many field="contacts" target-entity="Acme\DemoBundle\Entity\Contact" mapped-by="rights">
+          <cascade>
+              <cascade-persist/>
+          </cascade>
+    </many-to-many>
+
+  </entity>
+</doctrine-mapping>

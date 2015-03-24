@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="acme.demo.note_manager" class="Acme\DemoBundle\NoteManager" public="true">
+            <argument type="service" id="security.secure_random" />
+            <argument>%kernel.cache_dir%</argument>
+        </service>
+        <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="twig.loader" />
+        </service>
+        <service id="acme.demo.listener" class="Acme\DemoBundle\EventListener\ControllerListener">
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
+            <argument type="service" id="twig.extension.acme.demo" />
+        </service>
+
+        <!-- address -->
+        <service id="api.form.address" class="Acme\DemoBundle\Form\Type\Api\V1\AddressType" >
+            <tag name="form.type" alias="api_v1_address" />
+        </service>
+        <service id="api.handler.address" class="Acme\DemoBundle\Handler\Api\V1\AddressHandler" scope="request">
+            <argument type="service" id="form.handler.address.api" />
+            <argument type="service" id="form.handler.contact.api" />
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="api.manager.address" class="Acme\DemoBundle\Manager\ApiEntityManager">
+            <argument>Acme\DemoBundle\Entity\Address</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="form.handler.address.api" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
+            <argument>api_v1_address</argument>
+            <argument>api_v1_address</argument>
+            <argument>null</argument>
+        </service>
+        <service id="address.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\AddressTransformer" scope="request">
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+
+        <!-- contact -->
+        <service id="api.form.contact" class="Acme\DemoBundle\Form\Type\Api\V1\ContactType" >
+            <tag name="form.type" alias="api_v1_contact" />
+        </service>
+
+        <service id="api.handler.contact" class="Acme\DemoBundle\Handler\Api\V1\ContactHandler" scope="request">
+            <argument type="service" id="form.handler.contact.api" />
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="api.manager.contact" class="Acme\DemoBundle\Manager\ApiEntityManager">
+            <argument>Acme\DemoBundle\Entity\Contact</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="form.handler.contact.api" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
+            <argument>api_v1_contact</argument>
+            <argument>api_v1_contact</argument>
+            <argument>null</argument>
+        </service>
+        <service id="contact.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\ContactTransformer" scope="request">
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+
+        <!-- right -->
+        <service id="api.form.right"   class="Acme\DemoBundle\Form\Type\Api\V1\RightType" >
+            <tag name="form.type" alias="api_v1_right" />
+        </service>
+        <service id="api.handler.right" class="Acme\DemoBundle\Handler\Api\V1\RightHandler" scope="request">
+            <argument type="service" id="form.handler.right.api" />
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="api.manager.right" class="Acme\DemoBundle\Manager\ApiEntityManager">
+            <argument>Acme\DemoBundle\Entity\Right</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="form.handler.right.api" class="Symfony\Component\Form\Form" factory-method="createNamed" factory-service="form.factory">
+            <argument>api_v1_right</argument>
+            <argument>api_v1_right</argument>
+            <argument>null</argument>
+        </service>
+        <service id="right.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\RightTransformer" scope="request">
+            <argument type="service" id="request" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <!-- deleted -->
+        <service id="api.handler.delete" class="Acme\DemoBundle\Handler\Api\DeleteHandler" >
+            <argument type="service" id="api.manager.delete" />
+        </service>
+
+        <service id="api.manager.delete" class="Acme\DemoBundle\Manager\DeletionManager" />
+
+    </services>
+</container>

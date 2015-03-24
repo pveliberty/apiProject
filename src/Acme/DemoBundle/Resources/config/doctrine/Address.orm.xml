@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+  >
+
+  <entity name="Acme\DemoBundle\Entity\Address"   table="addresses">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+
+    <field name="title" type="string" column="title" precision="0" scale="0" nullable="false"/>
+    <field name="lastname" type="string" column="lastname" length="64" nullable="true"/>
+    <field name="firstname" type="string" column="firstname" length="64" nullable="true"/>
+    <field name="company" type="string" column="company" length="255" nullable="true"/>
+    <field name="address1" type="string" column="address1"  nullable="false"/>
+    <field name="address2" type="string" column="address2"  nullable="true"/>
+    <field name="address3" type="string" column="address3" nullable="true"/>
+    <field name="zipcode" type="string" column="zipcode" length="32" nullable="true"/>
+    <field name="city" type="string" column="city" length="64" nullable="false"/>
+    <field name="version" type="integer" column="version" precision="0" scale="0" nullable="true"/>
+    <field name="active" type="boolean" column="active" precision="0" scale="0" nullable="true"/>
+    <field name="default" type="boolean" column="isdefault" precision="0" scale="0" nullable="true"/>
+    <field name="country" type="string" column="country" length="2" scale="0" nullable="true"/>
+    <field name="latitude" type="decimal" column="latitude" length="18" scale="12" precision="18" nullable="true"/>
+    <field name="longitude" type="decimal" column="longitude" length="18" scale="12" precision="18" nullable="true"/>
+    <field name="externalId" type="string" column="external_id" length="40" nullable="true"/>
+
+    <field name="createdAt" type="datetime" column="created_at" nullable="false">
+    </field>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="false">
+    </field>
+
+    <many-to-one field="contact" target-entity="Acme\DemoBundle\Entity\Contact" inversed-by="addresses">
+      <cascade>
+        <cascade-persist/>
+      </cascade>
+      <join-columns>
+        <join-column name="contact_id" referenced-column-name="id" nullable="true"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
