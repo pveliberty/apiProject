@@ -2,12 +2,9 @@
 
 namespace Acme\DemoBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-use JMS\Serializer\Annotation\ExclusionPolicy,
-    JMS\Serializer\Annotation\Expose,
-    JMS\Serializer\Annotation\Groups,
-    JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Hateoas\Configuration\Route;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -15,10 +12,29 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Address")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_address",
+ *          parameters = {
+ *              "id" = "expr(object.getId())"
+ *          }
+ *      )
+ * )
+ * @Hateoas\Relation(
+        "contact",
+ *      href = @Hateoas\Route(
+ *          "get_contact",
+ *          parameters = {
+ *              "id" = "expr(object.getContact().getId())"
+ *          }
+ *      ),
+ *      exclusion = @Hateoas\Exclusion(excludeIf = "expr(object.getContact() === null)")
+ * )
  */
 class Address
 {
-
     /**
      * id
      */
@@ -26,65 +42,47 @@ class Address
 
     /**
      * @var string $title
-     *
-     * @ORM\Column(name="title", type="string", nullable=false)
      */
     protected $title;
 
     /**
      * @var string
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $company;
 
     /**
-     * @Expose
-     * @Groups({"apiv1", "internal"})
      * @var string
      */
     protected $lastname;
 
     /**
-     * @Expose
-     * @Groups({"apiv1", "internal"})
      * @var string
      */
     protected $firstname;
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $address1;
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $address2;
 
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $address3;
 
-
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $zipcode;
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $city;
 
@@ -95,29 +93,21 @@ class Address
 
     /**
      * @var double
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $latitude;
 
     /**
      * @var double
-     * @Expose
-     * @Groups({"front_cart", "apiv1", "internal"})
      */
     protected $longitude;
 
     /**
      * @var boolean
-     * @Expose
-     * @Groups({"apiv1", "internal"})
      */
     protected $active = true;
 
     /**
      * @var boolean
-     * @Expose
-     * @Groups({"apiv1", "internal"})
      */
     protected $default = false;
 
@@ -129,8 +119,6 @@ class Address
 
     /**
      * @var string
-     * @Expose
-     * @Groups({"front_cart", "apiv1"})
      */
     protected $country;
 
@@ -140,18 +128,12 @@ class Address
     protected $externalId;
 
     /**
-     * @Expose
-     *
      *
      * @var \DateTime
-     * @Groups({"search","api", "apiv1", "internal", "elastica"})
      */
     protected $createdAt ;
 
     /**
-     * @Expose
-     * @Groups({"search","api", "apiv1", "internal" })
-     *
      * @var \DateTime
      */
     protected $updatedAt;

@@ -1,0 +1,5 @@
+## SECTION API V1
+contacts:
+    type: rest
+    resource: Acme\DemoBundle\Controller\Api\V2\ContactController
+    name_prefix: api_v2_

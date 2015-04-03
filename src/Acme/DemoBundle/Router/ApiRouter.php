@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
-use Symfony\Component\Routing\RequestContext as BaseRequestContext;
+use Acme\DemoBundle\Router\RequestContext;
 
 /**
  * Class ApiRouter.
@@ -25,13 +25,13 @@ class ApiRouter extends Router implements RequestMatcherInterface
      * @param ContainerInterface $container
      * @param mixed              $resource
      * @param array              $options
-     * @param BaseRequestContext $context
+     * @param RequestContext $context
      */
-    public function __construct(ContainerInterface $container, $resource, array $options = array(), BaseRequestContext $context = null)
+    public function __construct(ContainerInterface $container, $resource, array $options = array(), RequestContext $context = null)
     {
-        parent::__construct($container, $resource, $options, new RequestContext());
-
-        $this->acceptHeader = 'application/vnd.eliberty.api+json';
+        parent::__construct($container, $resource, $options, $context);
+        //http://urthen.github.io/2013/05/16/ways-to-version-your-api-part-2/
+        $this->acceptHeader = "/application\/vnd.eliberty.api.(v[-+]?(\d*[.])?\d+).+json/";
     }
 
     /**
@@ -49,18 +49,18 @@ class ApiRouter extends Router implements RequestMatcherInterface
      */
     public function matchRequest(Request $request)
     {
-        $acceptHeader = AcceptHeader::fromString($request->headers->get('Accept'))->get($this->acceptHeader);
 
-        if (null === $acceptHeader) {
-            return $this->match($request->getPathInfo());
-        }
-
-        if (null === ($version = $acceptHeader->getAttribute('version'))) {
-            return $this->match($request->getPathInfo());
+        $listOfAcceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))->all();
+        $version = 'v1';
+        foreach ($listOfAcceptHeaders as $listOfAcceptHeader) {
+            $result = preg_match($this->acceptHeader, $listOfAcceptHeader->getValue(), $versioning);
+            if ((bool)$result === true && isset($versioning[1])) {
+                $version = $versioning[1];
+            }
         }
 
         $this->getContext()->setApiVersion($version);
 
-        return $this->match($request->getPathInfo());
+        return parent::matchRequest($request);
     }
 }

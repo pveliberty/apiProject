@@ -37,9 +37,16 @@
             <argument>api_v1_address</argument>
             <argument>null</argument>
         </service>
-        <service id="address.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\AddressTransformer" scope="request">
-            <argument type="service" id="request" />
+        <service id="transformer.address" class="Acme\DemoBundle\Transformer\Api\V1\AddressTransformer" scope="request">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <call method="setRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
+        </service>
+        <service id="acme_demo.entity_listener.address"  class="Acme\DemoBundle\Doctrine\Listener\Entity\AddressListener">
+            <argument type="service" id="event_dispatcher"></argument>
+            <argument type="service" id="logger"></argument>
+            <tag name="doctrine.entity_listener" />
         </service>
 
 
@@ -62,9 +69,16 @@
             <argument>api_v1_contact</argument>
             <argument>null</argument>
         </service>
-        <service id="contact.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\ContactTransformer" scope="request">
-            <argument type="service" id="request" />
+        <service id="transformer.contact" class="Acme\DemoBundle\Transformer\Api\V1\ContactTransformer" scope="request">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <call method="setRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
+        </service>
+        <service id="acme_demo.entity_listener.contact"  class="Acme\DemoBundle\Doctrine\Listener\Entity\ContactListener">
+            <argument type="service" id="event_dispatcher"></argument>
+            <argument type="service" id="logger"></argument>
+            <tag name="doctrine.entity_listener" />
         </service>
 
 
@@ -86,9 +100,11 @@
             <argument>api_v1_right</argument>
             <argument>null</argument>
         </service>
-        <service id="right.transformer" class="Acme\DemoBundle\Transformer\Api\Rest\V1\RightTransformer" scope="request">
-            <argument type="service" id="request" />
+        <service id="transformer.right" class="Acme\DemoBundle\Transformer\Api\V1\RightTransformer"  scope="request" >
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <call method="setRequest">
+                <argument type="service" id="request" on-invalid="null" strict="false" />
+            </call>
         </service>
 
         <!-- deleted -->
@@ -98,5 +114,18 @@
 
         <service id="api.manager.delete" class="Acme\DemoBundle\Manager\DeletionManager" />
 
+        <!-- language -->
+        <service id="api.language.kernel_request_listener" class="Acme\DemoBundle\Listener\ApiLanguageListener" >
+            <tag name="kernel.event_listener" event="kernel.request" method="setLocale" />
+        </service>
+        <!-- webhook -->
+        <service id="acme_demo.doctrine.entity_listener_resolver" class="Acme\DemoBundle\Doctrine\Listener\EntityListenerResolver" >
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="webhook.listener" class="Acme\DemoBundle\Listener\WebHookListener" >
+            <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
+            <argument type="service" id="logger"></argument>
+            <tag name="kernel.event_subscriber"></tag>
+        </service>
     </services>
 </container>

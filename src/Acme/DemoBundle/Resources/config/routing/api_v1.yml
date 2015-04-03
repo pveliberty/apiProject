@@ -1,0 +1,15 @@
+## SECTION API V1
+contacts:
+    type: rest
+    resource: Acme\DemoBundle\Controller\Api\V1\ContactController
+    name_prefix: api_v1_
+
+addresses:
+    type: rest
+    resource: Acme\DemoBundle\Controller\Api\V1\AddressController
+    name_prefix: api_v1_
+
+rights:
+    type: rest
+    resource: Acme\DemoBundle\Controller\Api\V1\RightController
+    name_prefix: api_v1_

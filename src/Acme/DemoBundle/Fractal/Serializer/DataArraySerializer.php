@@ -46,13 +46,13 @@ class DataArraySerializer extends baseDataArraySerializer
         $lastPage    = (int)$paginator->getLastPage();
 
         $pagination = [
-            'total'       => (int)$paginator->getTotal(),
-            'count'       => (int)$paginator->getCount(),
-            'perpage'     => (int)$paginator->getPerPage(),
-            'page'        => $currentPage,
-            'total_pages' => $lastPage,
+            'total'        => (int)$paginator->getTotal(),
+//            'count'        => (int)$paginator->getCount(),
+            'perpage'      => (int)$paginator->getPerPage(),
+            'page'         => $currentPage,
+            'total_pages'  => $lastPage,
             'offset_start' => (int)$paginator->getPaginator()->getCurrentPageOffsetStart(),
-            'offset_end' => (int)$paginator->getPaginator()->getCurrentPageOffsetEnd(),
+            'offset_end'   => (int)$paginator->getPaginator()->getCurrentPageOffsetEnd(),
         ];
 
         $pagination['links'] = [];
@@ -72,7 +72,7 @@ class DataArraySerializer extends baseDataArraySerializer
      * Serialize a collection.
      *
      * @param string $resourceKey
-     * @param array  $data
+     * @param array $data
      *
      * @return array
      */

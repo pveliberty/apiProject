@@ -32,7 +32,7 @@
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false">
     </field>
 
-    <many-to-one field="contact" target-entity="Acme\DemoBundle\Entity\Contact" inversed-by="addresses">
+      <many-to-one field="contact" target-entity="Acme\DemoBundle\Entity\Contact" inversed-by="addresses">
       <cascade>
         <cascade-persist/>
       </cascade>

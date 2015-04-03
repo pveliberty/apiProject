@@ -3,39 +3,29 @@
 namespace Acme\DemoBundle\Controller\Api;
 
 use Doctrine\ORM\EntityNotFoundException;
-
-
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Util\Codes;
-
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\UnitOfWork;
-use Doctrine\ORM\Proxy\Proxy;
-use Doctrine\Common\Collections\Criteria;
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\Request\ParamFetcherInterface;
-
-
+use FOS\RestBundle\Util\Codes;
 
 abstract class RestController extends FOSRestController
 {
+    //const ENTITY_NAME = '';
     const ACTION_CREATE = 'create';
     const ACTION_UPDATE = 'update';
     const ACTION_DELETE = 'delete';
-    const ACTION_PATCH  = 'patch';
-    const CODE_WRONG_ARGS = 'GEN-FUBARGS';
-    const CODE_NOT_FOUND = 'GEN-LIKETHEWIND';
-    const CODE_INTERNAL_ERROR = 'GEN-AAAGGH';
-    const CODE_UNAUTHORIZED = 'GEN-MAYBGTFO';
-    const CODE_FORBIDDEN = 'GEN-GTFO';
+    const ACTION_PATCH = 'patch';
+    const CODE_WRONG_ARGS = Codes::HTTP_BAD_REQUEST;
+    const CODE_NOT_FOUND = Codes::HTTP_NOT_FOUND;
+    const CODE_INTERNAL_ERROR = Codes::HTTP_INTERNAL_SERVER_ERROR;
+    const CODE_UNAUTHORIZED = Codes::HTTP_UNAUTHORIZED;
+    const CODE_FORBIDDEN = Codes::HTTP_FORBIDDEN;
+
     /**
-     * Edit entity
+     * Edit entity.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return Response
      */
@@ -46,13 +36,15 @@ abstract class RestController extends FOSRestController
             if ($this->processForm($entity)) {
                 return $this->getPreparedItem($entity);
             }
+
             return $this->errorFormResponse();
         }
+
         return $this->errorNotFound();
     }
 
     /**
-     * Create new
+     * Create new.
      *
      * @param mixed $_ [optional] Arguments will be passed to createEntity method
      *
@@ -64,12 +56,12 @@ abstract class RestController extends FOSRestController
         if ($this->processForm($entity)) {
             return $this->getPreparedItem($entity);
         }
+
         return $this->errorFormResponse();
     }
 
-
     /**
-     * Create new entity
+     * Create new entity.
      *
      * @param mixed $_ [optional] Arguments will be passed to createEntity method of manager (result of getManager)
      *
@@ -83,7 +75,7 @@ abstract class RestController extends FOSRestController
     /**
      * Process form.
      *
-     * @param  mixed $entity
+     * @param mixed $entity
      *
      * @return bool
      */
@@ -99,21 +91,24 @@ abstract class RestController extends FOSRestController
      */
     protected function fixRequestAttributes()
     {
-        $request  = $this->container->get('request');
-        $formName = str_replace('api_v1_', '', $this->getForm()->getName());
+        $apiVersion = $this->get('router')->getContext()->getApiVersion();
+        $request    = $this->container->get('request');
+        $formName   = str_replace('api_'.$apiVersion.'_', '', $this->getForm()->getName());
 
-        $data     = empty($formName)
-            ? $request->request->all()
-            : $request->request->get($formName);
+        if (!$request->request->has($formName)) {
+            throw new InvalidArgumentException('invalid request format detected');
+        }
+
+        $data = $request->request->get($formName);
 
         // save fixed values for named form
         $request->request->set($this->getForm()->getName(), $data);
     }
 
     /**
-     * Delete entity
+     * Delete entity.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return Response
      */
@@ -122,8 +117,7 @@ abstract class RestController extends FOSRestController
         try {
             $this->getDeleteHandler()->handleDelete($id, $this->getManager());
 
-            return new JsonResponse([],Codes::HTTP_NO_CONTENT);
-
+            return new JsonResponse([], Codes::HTTP_NO_CONTENT);
         } catch (EntityNotFoundException $notFoundEx) {
             return $this->errorNotFound($notFoundEx->getMessage());
         } catch (\Exception $ex) {
@@ -188,14 +182,14 @@ abstract class RestController extends FOSRestController
      */
     public function errorWrongArgs($message = 'Wrong Arguments')
     {
-        return $this->setStatusCode(400) -> respondWithError($message, self::CODE_WRONG_ARGS);
+        return $this->setStatusCode(400)->respondWithError($message, self::CODE_WRONG_ARGS);
     }
 
     /**
-     * return error form
+     * return error form.
      */
-    public function errorFormResponse(){
-
+    public function errorFormResponse()
+    {
         return  ['form' => $this->getFormHandler()->getForm()];
     }
 
@@ -207,5 +201,46 @@ abstract class RestController extends FOSRestController
     protected function getDeleteHandler()
     {
         return $this->get('api.handler.delete');
+    }
+
+    /**
+     * Get entity Manager
+     *
+     * @return ApiEntityManager
+     */
+    protected function getManager()
+    {
+        return $this->get('api.manager.'.$this->getEntityName());
+    }
+
+    /**
+     * @return FormInterface
+     */
+    protected function getForm()
+    {
+        return $this->get('api.form.'.$this->getEntityName());
+    }
+
+    /**
+     * @return ApiFormHandler
+     */
+    protected function getFormHandler()
+    {
+        return $this->get('api.handler.'.$this->getEntityName());
+    }
+
+    /**
+     * @return AbstractTransformer
+     */
+    protected function getTransformer()
+    {
+        return $this->get('transformer.'.$this->getEntityName());
+    }
+
+    /**
+     * @return null
+     */
+    protected function getEntityName(){
+        return null;
     }
 }

@@ -68,5 +68,6 @@
     <field name="oldIdContact" type="string" column="oldidcontact" length="64" nullable="true"/>
     <field name="externalGuid" type="string" column="external_guid" length="64" nullable="true"/>
     <field name="data" column="data" type="array" nullable="true" />
+
   </entity>
 </doctrine-mapping>

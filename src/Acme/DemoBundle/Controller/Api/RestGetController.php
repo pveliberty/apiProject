@@ -28,7 +28,7 @@ class RestGetController extends RestController
     /**
      * @var int
      */
-    protected $limit = 100;
+    protected $limit = 1000;
 
     /**
      * @var null
@@ -64,27 +64,28 @@ class RestGetController extends RestController
     protected $embeds;
 
     /**
+     * @var array
+     */
+    protected $headers;
+
+    /**
      * @param ParamFetcherInterface $paramFetcher
      */
-    public function setParamsFetcher(ParamFetcherInterface $paramFetcher)
+    public function initParams(ParamFetcherInterface $paramFetcher)
     {
         $this->fractal = new Manager();
 
+        $this->headers = $this->get('request')->headers;
+
         foreach ($paramFetcher->all() as $key => $param) {
             if ($key === 'embed') {
-                $embeds = $this->getEmbedsWithoutOptions($paramFetcher);
-                $embeds = $this->getEmbedsWithSubEmbed($embeds);
-
-                // Are we going to try and include embedded data?
-                $this->fractal->parseIncludes($embeds);
+                $this->setIncludes($paramFetcher);
                 continue;
             }
 
             if (!is_null($param)) {
-                if ($key === 'orderby') {
-                    if (!is_array($param)) {
+                if ($key === 'orderby' && !is_array($param)) {
                         $param = (array)json_decode(str_replace('=', ':', $param));
-                    }
                 }
                 $this->$key              = $param;
                 $this->optionEmbed[$key] = $param;
@@ -93,12 +94,29 @@ class RestGetController extends RestController
     }
 
     /**
-     * @param array $embeds
+     *
+     */
+    private function setOptionsFractal()
+    {
+        $options = [
+            'viewDoc'         => $this->headers->get('e-View-Doc', 0),
+            'withLink'        => $this->headers->get('e-With-Link', 0),
+            'viewDocBasePath' => $this->container->getParameter('view.doc.base.path'),
+            'apiVersion'      => $this->get('router')->getContext()->getApiVersion(),
+        ];
+
+        $this->transformer->setOptions($options);
+    }
+
+    /**
+     * @param ParamFetcherInterface $paramFetcher
+     * @internal param array $embeds
      *
      * @return array
      */
-    private function getEmbedsWithSubEmbed($embeds = [])
+    private function setIncludes(ParamFetcherInterface $paramFetcher)
     {
+        $embeds = $this->getEmbedsWithoutOptions($paramFetcher);
         $responseEmbed = [];
         foreach ($embeds as $embed) {
             if (strpos($embed, '.') === false) {
@@ -114,7 +132,7 @@ class RestGetController extends RestController
             }
         }
 
-        return array_values($responseEmbed);
+        $this->fractal->parseIncludes($responseEmbed);
     }
 
     /**
@@ -204,6 +222,8 @@ class RestGetController extends RestController
             $this->fractal = new Manager();
         }
 
+        $this->setOptionsFractal();
+
         $resource = new Item($item, $this->transformer);
 
         $rootScope = $this->fractal->createData($resource, $resourceKey);
@@ -232,6 +252,8 @@ class RestGetController extends RestController
             $this->fractal = new Manager();
         }
 
+        $this->setOptionsFractal();
+
         $collection->setMaxPerPage($this->perpage)
             ->setCurrentPage($this->page);
 
@@ -258,6 +280,8 @@ class RestGetController extends RestController
      */
     protected function respondWithArray(array $array, array $headers = [])
     {
+        $headers['e-Embed'] = $this->embeds;
+
         return new JsonResponse($array, $this->statusCode, $headers);
     }
 

@@ -35,16 +35,16 @@ class DeletionManager
     {
 
         $result    = false;
-        $classMeta = $this->om->getClassMetadata($this->apiEm->getClass());
-
-        foreach ($classMeta->getAssociationMappings() as $association) {
-            $functName = 'get'.ucfirst($association['fieldName']);
-            $data = call_user_func([$entity, $functName],null);
-            if (!empty($data)) {
-                $result = true;
-                break;
-            }
-        }
+//        $classMeta = $this->om->getClassMetadata($this->apiEm->getClass());
+//
+//        foreach ($classMeta->getAssociationMappings() as $association) {
+//            $functName = 'get'.ucfirst($association['fieldName']);
+//            $data = call_user_func([$entity, $functName],null);
+//            if (!empty($data)) {
+//                $result = true;
+//                break;
+//            }
+//        }
 
         return $result;
     }

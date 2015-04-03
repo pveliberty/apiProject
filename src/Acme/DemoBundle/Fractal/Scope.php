@@ -11,7 +11,7 @@
 
 namespace Acme\DemoBundle\Fractal;
 
-use League\Fractal\Scope as baseFractalScope;
+use League\Fractal\Scope as BaseFractalScope;
 use InvalidArgumentException;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -25,15 +25,23 @@ use League\Fractal\Serializer\SerializerAbstract;
  * context. For example, the same resource could be attached to multiple scopes.
  * There are root scopes, parent scopes and child scopes.
  */
-class Scope extends baseFractalScope
+class Scope extends BaseFractalScope
 {
-    /**
-     * Set the current identifier.
-     *
-     * @return string
-     */
-    public function setScopeIdentifier($scopeIdentifer)
-    {
-        $this->scopeIdentifer = $scopeIdentifer;
-    }
+//    /**
+//     * Fire the main transformer.
+//     *
+//     * @internal
+//     *
+//     * @param TransformerAbstract|callable $transformer
+//     * @param mixed                        $data
+//     *
+//     * @return array
+//     */
+//    protected function fireTransformer($transformer, $data)
+//    {
+//        $options = $this->manager->getOptions();
+//        $transformer->setOptions($options);
+//
+//        parent::fireTransformer($transformer,$data);
+//    }
 }

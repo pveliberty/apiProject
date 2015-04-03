@@ -1,7 +1,7 @@
 <?php
 
 namespace Acme\DemoBundle\Entity;
-
+use Hateoas\Configuration\Annotation as Hateoas;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Contact")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
+ * @Hateoas\Relation("self", href = "expr('/contact/' ~ object.getId())")
  */
 class  Contact
 {
