@@ -27,7 +27,8 @@
         "hautelook/templated-uri-bundle": "2.0.0",
         "willdurand/rest-extra-bundle": "1.0.2",
         "league/fractal": "0.12.*@dev",
-        "white-october/pagerfanta-bundle": "v1.0.2"
+        "white-october/pagerfanta-bundle": "v1.0.2",
+        "guzzle/guzzle": "3.9.*@dev"
 },
     "conflict": {
         "symfony/routing": "2.4.1"

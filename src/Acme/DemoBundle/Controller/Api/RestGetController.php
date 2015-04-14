@@ -319,7 +319,7 @@ class RestGetController extends RestController
         $inputEmbedParamFetcher = !empty($this->embeds) ? 'embed=' . $this->embeds : '?';
         $baseUri                = $uri = urldecode($this->getRequest()->getUri());
 
-        $adatpter = new PagerfantaPaginatorAdapter($ressource, function ($page) use ($baseUri, $inputEmbedParamFetcher) {
+        $adapter = new PagerfantaPaginatorAdapter($ressource, function ($page) use ($baseUri, $inputEmbedParamFetcher) {
             //delete white space into uri
             $uriBaseTrim = str_replace(' ', '', $baseUri);
             //find if base uri have the ? carac for deduct the prefixe
@@ -332,7 +332,7 @@ class RestGetController extends RestController
             return urldecode($newUri);
         });
 
-        return $adatpter;
+        return $adapter;
     }
 
 }

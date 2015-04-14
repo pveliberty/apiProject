@@ -56,6 +56,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        entity_listener_resolver: acme_demo.doctrine.entity_listener_resolver
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -115,3 +116,8 @@ fos_http_cache:
                     cache_control: { public: true, max_age: 15, s_maxage: 30 }
                     last_modified: "-1 hour"
                     vary: [Accept-Encoding, Accept-Language]
+
+# DunglasJsonLdApi configuration
+dunglas_json_ld_api:
+    title:       "%api_name%"
+    description: "%api_description%"

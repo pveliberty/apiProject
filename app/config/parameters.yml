@@ -16,3 +16,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     router.class: Acme\DemoBundle\Router\ApiRouter
     router.request_context.class: Acme\DemoBundle\Router\RequestContext
+    routing.loader.class: Acme\DemoBundle\Router\DelegatingLoader
+    view.doc.base.path: 'http://docs.elib.apiary.io/#reference/order-operations/'

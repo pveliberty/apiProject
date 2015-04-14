@@ -75,5 +75,4 @@ class AddressTransformer extends BaseTransformer
         return $this->item($contact, $contactTransformer);
     }
 
-
 }

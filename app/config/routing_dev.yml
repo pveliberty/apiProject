@@ -9,17 +9,17 @@ _demo_note:
     resource: "@AcmeDemoBundle/Controller/NoteController.php"
     type:     rest
 
-_demo_address:
-    resource: "@AcmeDemoBundle/Controller/Api/Rest/AddressController.php"
-    type:     rest
-
-_demo_contact:
-  resource: "@AcmeDemoBundle/Controller/Api/Rest/ContactController.php"
-  type:     rest
-
-_demo_right:
-    resource: "@AcmeDemoBundle/Controller/Api/Rest/RightController.php"
-    type:     rest
+#_demo_address:
+#    resource: "@AcmeDemoBundle/Controller/Api/V1/AddressController.php"
+#    type:     rest
+#
+#_demo_contact:
+#  resource: "@AcmeDemoBundle/Controller/Api/V1/ContactController.php"
+#  type:     rest
+#
+#_demo_right:
+#    resource: "@AcmeDemoBundle/Controller/Api/V1/RightController.php"
+#    type:     rest
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"
@@ -35,3 +35,14 @@ _configurator:
 
 _main:
     resource: routing.yml
+
+##Api v1 routes
+_api_v1:
+    resource: "@AcmeDemoBundle/Resources/config/routing/api_v1.yml"
+    type: rest
+
+##
+###Api v1 routes
+_api_v2:
+    resource: "@AcmeDemoBundle/Resources/config/routing/api_v2.yml"
+    type: rest

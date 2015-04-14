@@ -432,7 +432,14 @@ class BaseTransformer extends TransformerAbstract
      */
     public function setOptions($option)
     {
-//        var_dump($option);exit;
         $this->options = $option;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentResourceKey()
+    {
+        return $this->currentResourceKey;
     }
 }

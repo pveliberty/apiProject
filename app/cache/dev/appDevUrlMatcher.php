@@ -5,7 +5,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 
 /**
- * appDevUrlMatcher
+ * appDevUrlMatcher.
  *
  * This class has been auto-generated
  * by the Symfony Routing Component.
@@ -127,266 +127,6 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        if (0 === strpos($pathinfo, '/addresses')) {
-            // get_addresses
-            if (preg_match('#^/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_addresses;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_addresses')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::getAddressesAction',  '_format' => 'json',));
-            }
-            not_get_addresses:
-
-            // get_address
-            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_address;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::getAddressAction',  '_format' => 'json',));
-            }
-            not_get_address:
-
-        }
-
-        // get_contact_addresses
-        if (0 === strpos($pathinfo, '/contacts') && preg_match('#^/contacts/(?P<id>[^/]++)/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_get_contact_addresses;
-            }
-
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_contact_addresses')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::getContactAddressesAction',  '_format' => 'json',));
-        }
-        not_get_contact_addresses:
-
-        if (0 === strpos($pathinfo, '/addresses')) {
-            // post_address
-            if (preg_match('#^/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_post_address;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'post_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::postAddressAction',  '_format' => 'json',));
-            }
-            not_post_address:
-
-            // patch_address
-            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PATCH') {
-                    $allow[] = 'PATCH';
-                    goto not_patch_address;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'patch_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::patchAddressAction',  '_format' => 'json',));
-            }
-            not_patch_address:
-
-            // put_address
-            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PUT') {
-                    $allow[] = 'PUT';
-                    goto not_put_address;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'put_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::putAddressAction',  '_format' => 'json',));
-            }
-            not_put_address:
-
-            // delete_address
-            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'DELETE') {
-                    $allow[] = 'DELETE';
-                    goto not_delete_address;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\AddressController::deleteAddressAction',  '_format' => 'json',));
-            }
-            not_delete_address:
-
-        }
-
-        if (0 === strpos($pathinfo, '/contacts')) {
-            // get_contacts
-            if (preg_match('#^/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_contacts;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_contacts')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::getContactsAction',  '_format' => 'json',));
-            }
-            not_get_contacts:
-
-            // get_contact
-            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_contact;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::getContactAction',  '_format' => 'json',));
-            }
-            not_get_contact:
-
-        }
-
-        // get_address_contact
-        if (0 === strpos($pathinfo, '/addresses') && preg_match('#^/addresses/(?P<id>[^/]++)/contact(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_get_address_contact;
-            }
-
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_address_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::getAddressContactAction',  '_format' => 'json',));
-        }
-        not_get_address_contact:
-
-        // get_right_contacts
-        if (0 === strpos($pathinfo, '/rights') && preg_match('#^/rights/(?P<id>[^/]++)/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_get_right_contacts;
-            }
-
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_right_contacts')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::getRightContactsAction',  '_format' => 'json',));
-        }
-        not_get_right_contacts:
-
-        if (0 === strpos($pathinfo, '/contacts')) {
-            // post_contact
-            if (preg_match('#^/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_post_contact;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'post_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::postContactAction',  '_format' => 'json',));
-            }
-            not_post_contact:
-
-            // patch_contact
-            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PATCH') {
-                    $allow[] = 'PATCH';
-                    goto not_patch_contact;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'patch_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::patchContactAction',  '_format' => 'json',));
-            }
-            not_patch_contact:
-
-            // put_contact
-            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PUT') {
-                    $allow[] = 'PUT';
-                    goto not_put_contact;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'put_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::putContactAction',  '_format' => 'json',));
-            }
-            not_put_contact:
-
-            // delete_contact
-            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'DELETE') {
-                    $allow[] = 'DELETE';
-                    goto not_delete_contact;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\ContactController::deleteContactAction',  '_format' => 'json',));
-            }
-            not_delete_contact:
-
-        }
-
-        if (0 === strpos($pathinfo, '/rights')) {
-            // get_rights
-            if (preg_match('#^/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_rights;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_rights')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::getRightsAction',  '_format' => 'json',));
-            }
-            not_get_rights:
-
-            // get_right
-            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                    $allow = array_merge($allow, array('GET', 'HEAD'));
-                    goto not_get_right;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::getRightAction',  '_format' => 'json',));
-            }
-            not_get_right:
-
-        }
-
-        // get_contact_rights
-        if (0 === strpos($pathinfo, '/contacts') && preg_match('#^/contacts/(?P<id>[^/]++)/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
-                $allow = array_merge($allow, array('GET', 'HEAD'));
-                goto not_get_contact_rights;
-            }
-
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'get_contact_rights')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::getContactRightsAction',  '_format' => 'json',));
-        }
-        not_get_contact_rights:
-
-        if (0 === strpos($pathinfo, '/rights')) {
-            // post_right
-            if (preg_match('#^/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'POST') {
-                    $allow[] = 'POST';
-                    goto not_post_right;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'post_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::postRightAction',  '_format' => 'json',));
-            }
-            not_post_right:
-
-            // patch_right
-            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PATCH') {
-                    $allow[] = 'PATCH';
-                    goto not_patch_right;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'patch_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::patchRightAction',  '_format' => 'json',));
-            }
-            not_patch_right:
-
-            // put_right
-            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'PUT') {
-                    $allow[] = 'PUT';
-                    goto not_put_right;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'put_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::putRightAction',  '_format' => 'json',));
-            }
-            not_put_right:
-
-            // delete_right
-            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches)) {
-                if ($this->context->getMethod() != 'DELETE') {
-                    $allow[] = 'DELETE';
-                    goto not_delete_right;
-                }
-
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'delete_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\Rest\\RightController::deleteRightAction',  '_format' => 'json',));
-            }
-            not_delete_right:
-
-        }
-
         if (0 === strpos($pathinfo, '/_')) {
             // _wdt
             if (0 === strpos($pathinfo, '/_wdt') && preg_match('#^/_wdt/(?P<token>[^/]++)$#s', $pathinfo, $matches)) {
@@ -496,6 +236,291 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'Nelmio\\ApiDocBundle\\Controller\\ApiDocController::indexAction',  '_route' => 'nelmio_api_doc_index',);
         }
         not_nelmio_api_doc_index:
+
+        if (0 === strpos($pathinfo, '/contacts')) {
+            // api_v1_get_contacts
+            if (preg_match('#^/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_contacts;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_contacts')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::getContactsAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_contacts:
+
+            // api_v1_get_contact
+            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::getContactAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_contact:
+
+        }
+
+        // api_v1_get_address_contact
+        if (0 === strpos($pathinfo, '/addresses') && preg_match('#^/addresses/(?P<id>[^/]++)/contact(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_api_v1_get_address_contact;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_address_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::getAddressContactAction',  '_format' => 'json',));
+        }
+        not_api_v1_get_address_contact:
+
+        // api_v1_get_right_contacts
+        if (0 === strpos($pathinfo, '/rights') && preg_match('#^/rights/(?P<id>[^/]++)/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_api_v1_get_right_contacts;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_right_contacts')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::getRightContactsAction',  '_format' => 'json',));
+        }
+        not_api_v1_get_right_contacts:
+
+        if (0 === strpos($pathinfo, '/contacts')) {
+            // api_v1_post_contact
+            if (preg_match('#^/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_api_v1_post_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_post_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::postContactAction',  '_format' => 'json',));
+            }
+            not_api_v1_post_contact:
+
+            // api_v1_patch_contact
+            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PATCH') {
+                    $allow[] = 'PATCH';
+                    goto not_api_v1_patch_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_patch_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::patchContactAction',  '_format' => 'json',));
+            }
+            not_api_v1_patch_contact:
+
+            // api_v1_put_contact
+            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_api_v1_put_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_put_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::putContactAction',  '_format' => 'json',));
+            }
+            not_api_v1_put_contact:
+
+            // api_v1_delete_contact
+            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'DELETE') {
+                    $allow[] = 'DELETE';
+                    goto not_api_v1_delete_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_delete_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\ContactController::deleteContactAction',  '_format' => 'json',));
+            }
+            not_api_v1_delete_contact:
+
+        }
+
+        if (0 === strpos($pathinfo, '/addresses')) {
+            // api_v1_get_addresses
+            if (preg_match('#^/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_addresses;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_addresses')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::getAddressesAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_addresses:
+
+            // api_v1_get_address
+            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_address;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::getAddressAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_address:
+
+        }
+
+        // api_v1_get_contact_addresses
+        if (0 === strpos($pathinfo, '/contacts') && preg_match('#^/contacts/(?P<id>[^/]++)/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_api_v1_get_contact_addresses;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_contact_addresses')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::getContactAddressesAction',  '_format' => 'json',));
+        }
+        not_api_v1_get_contact_addresses:
+
+        if (0 === strpos($pathinfo, '/addresses')) {
+            // api_v1_post_address
+            if (preg_match('#^/addresses(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_api_v1_post_address;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_post_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::postAddressAction',  '_format' => 'json',));
+            }
+            not_api_v1_post_address:
+
+            // api_v1_patch_address
+            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PATCH') {
+                    $allow[] = 'PATCH';
+                    goto not_api_v1_patch_address;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_patch_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::patchAddressAction',  '_format' => 'json',));
+            }
+            not_api_v1_patch_address:
+
+            // api_v1_put_address
+            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_api_v1_put_address;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_put_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::putAddressAction',  '_format' => 'json',));
+            }
+            not_api_v1_put_address:
+
+            // api_v1_delete_address
+            if (preg_match('#^/addresses/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'DELETE') {
+                    $allow[] = 'DELETE';
+                    goto not_api_v1_delete_address;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_delete_address')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\AddressController::deleteAddressAction',  '_format' => 'json',));
+            }
+            not_api_v1_delete_address:
+
+        }
+
+        if (0 === strpos($pathinfo, '/rights')) {
+            // api_v1_get_rights
+            if (preg_match('#^/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_rights;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_rights')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::getRightsAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_rights:
+
+            // api_v1_get_right
+            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v1_get_right;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::getRightAction',  '_format' => 'json',));
+            }
+            not_api_v1_get_right:
+
+        }
+
+        // api_v1_get_contact_rights
+        if (0 === strpos($pathinfo, '/contacts') && preg_match('#^/contacts/(?P<id>[^/]++)/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+            if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                $allow = array_merge($allow, array('GET', 'HEAD'));
+                goto not_api_v1_get_contact_rights;
+            }
+
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_get_contact_rights')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::getContactRightsAction',  '_format' => 'json',));
+        }
+        not_api_v1_get_contact_rights:
+
+        if (0 === strpos($pathinfo, '/rights')) {
+            // api_v1_post_right
+            if (preg_match('#^/rights(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_api_v1_post_right;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_post_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::postRightAction',  '_format' => 'json',));
+            }
+            not_api_v1_post_right:
+
+            // api_v1_patch_right
+            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PATCH') {
+                    $allow[] = 'PATCH';
+                    goto not_api_v1_patch_right;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_patch_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::patchRightAction',  '_format' => 'json',));
+            }
+            not_api_v1_patch_right:
+
+            // api_v1_put_right
+            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_api_v1_put_right;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_put_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::putRightAction',  '_format' => 'json',));
+            }
+            not_api_v1_put_right:
+
+            // api_v1_delete_right
+            if (preg_match('#^/rights/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v1")) {
+                if ($this->context->getMethod() != 'DELETE') {
+                    $allow[] = 'DELETE';
+                    goto not_api_v1_delete_right;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v1_delete_right')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V1\\RightController::deleteRightAction',  '_format' => 'json',));
+            }
+            not_api_v1_delete_right:
+
+        }
+
+        if (0 === strpos($pathinfo, '/contacts')) {
+            // api_v2_get_contacts
+            if (preg_match('#^/contacts(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v2")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v2_get_contacts;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v2_get_contacts')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V2\\ContactController::getContactsAction',  '_format' => 'json',));
+            }
+            not_api_v2_get_contacts:
+
+            // api_v2_get_contact
+            if (preg_match('#^/contacts/(?P<id>[^/\\.]++)(?:\\.(?P<_format>xml|json|html))?$#s', $pathinfo, $matches) && ($context->getApiVersion() === "v2")) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_api_v2_get_contact;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'api_v2_get_contact')), array (  '_controller' => 'Acme\\DemoBundle\\Controller\\Api\\V2\\ContactController::getContactAction',  '_format' => 'json',));
+            }
+            not_api_v2_get_contact:
+
+        }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }

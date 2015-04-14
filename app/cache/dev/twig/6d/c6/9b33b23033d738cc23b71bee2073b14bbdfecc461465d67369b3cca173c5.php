@@ -15,8 +15,8 @@ class __TwigTemplate_6dc69b33b23033d738cc23b71bee2073b14bbdfecc461465d67369b3cca
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_a295cd7fa86e8fa7bc566b859cf958e2e1d5637f8883f4965df790d8b068839a = $this->env->getExtension("native_profiler");
-        $__internal_a295cd7fa86e8fa7bc566b859cf958e2e1d5637f8883f4965df790d8b068839a->enter($__internal_a295cd7fa86e8fa7bc566b859cf958e2e1d5637f8883f4965df790d8b068839a_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "@WebProfiler/Profiler/toolbar_js.html.twig"));
+        $__internal_2fb044e20815207674a11f076893c66b2e2c00a4e8e92bc5a7abaadb4702f4ba = $this->env->getExtension("native_profiler");
+        $__internal_2fb044e20815207674a11f076893c66b2e2c00a4e8e92bc5a7abaadb4702f4ba->enter($__internal_2fb044e20815207674a11f076893c66b2e2c00a4e8e92bc5a7abaadb4702f4ba_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "@WebProfiler/Profiler/toolbar_js.html.twig"));
 
         // line 1
         echo "<div id=\"sfwdt";
@@ -90,10 +90,10 @@ class __TwigTemplate_6dc69b33b23033d738cc23b71bee2073b14bbdfecc461465d67369b3cca
                 Sfjs.renderAjaxRequests();
 
                 /* Handle toolbar-info position */
-                var toolbarBlocks = document.getElementsByClassName('sf-toolbar-block');
+                var toolbarBlocks = document.querySelectorAll('.sf-toolbar-block');
                 for (var i = 0; i < toolbarBlocks.length; i += 1) {
                     toolbarBlocks[i].onmouseover = function () {
-                        var toolbarInfo = this.getElementsByClassName('sf-toolbar-info')[0];
+                        var toolbarInfo = this.querySelectorAll('.sf-toolbar-info')[0];
                         var pageWidth = document.body.clientWidth;
                         var elementWidth = toolbarInfo.offsetWidth;
                         var leftValue = (elementWidth + this.offsetLeft) - pageWidth;
@@ -127,7 +127,7 @@ class __TwigTemplate_6dc69b33b23033d738cc23b71bee2073b14bbdfecc461465d67369b3cca
 /*]]>*/</script>
 ";
         
-        $__internal_a295cd7fa86e8fa7bc566b859cf958e2e1d5637f8883f4965df790d8b068839a->leave($__internal_a295cd7fa86e8fa7bc566b859cf958e2e1d5637f8883f4965df790d8b068839a_prof);
+        $__internal_2fb044e20815207674a11f076893c66b2e2c00a4e8e92bc5a7abaadb4702f4ba->leave($__internal_2fb044e20815207674a11f076893c66b2e2c00a4e8e92bc5a7abaadb4702f4ba_prof);
 
     }
 

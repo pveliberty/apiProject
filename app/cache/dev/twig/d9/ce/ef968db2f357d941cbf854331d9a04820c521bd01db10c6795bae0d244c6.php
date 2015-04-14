@@ -15,8 +15,8 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_6a5e86af57a73f2f96513217e490225b5d2a5181cfcda6b6acbc2512257ece70 = $this->env->getExtension("native_profiler");
-        $__internal_6a5e86af57a73f2f96513217e490225b5d2a5181cfcda6b6acbc2512257ece70->enter($__internal_6a5e86af57a73f2f96513217e490225b5d2a5181cfcda6b6acbc2512257ece70_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "@WebProfiler/Profiler/base_js.html.twig"));
+        $__internal_400a0ccbdfac7799f3715b361c7cd49eac5a58dd07318d172893263deba864d0 = $this->env->getExtension("native_profiler");
+        $__internal_400a0ccbdfac7799f3715b361c7cd49eac5a58dd07318d172893263deba864d0->enter($__internal_400a0ccbdfac7799f3715b361c7cd49eac5a58dd07318d172893263deba864d0_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "@WebProfiler/Profiler/base_js.html.twig"));
 
         // line 1
         echo "<script>/*<![CDATA[*/
@@ -24,6 +24,17 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
         \"use strict\";
 
         var noop = function() {},
+
+            collectionToArray = function (collection) {
+                var length = collection.length || 0,
+                    results = new Array(length);
+
+                while (length--) {
+                    results[length] = collection[length];
+                }
+
+                return results;
+            },
 
             profilerStorageKey = 'sf2/profiler/',
 
@@ -155,13 +166,13 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
                                 }
                             } else if (request.loading) {
                                 requestState = 'loading';
-                                state = 'loading'
+                                state = 'loading';
                             }
                             row.className = 'sf-ajax-request sf-ajax-request-' + requestState;
                         }
 
                         var infoSpan = document.querySelectorAll(\".sf-toolbar-ajax-info\")[0];
-                        var children = Array.prototype.slice.call(tbody.children);
+                        var children = collectionToArray(tbody.children);
                         for (var i = 0; i < children.length; i++) {
                             tbody.removeChild(children[i]);
                         }
@@ -209,10 +220,10 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
         }
 
         ";
-        // line 190
+        // line 201
         if (array_key_exists("excluded_ajax_paths", $context)) {
-            // line 191
-            echo "            if (window.XMLHttpRequest) {
+            // line 202
+            echo "            if (window.XMLHttpRequest && XMLHttpRequest.addEventListener) {
                 var proxied = XMLHttpRequest.prototype.open;
 
                 XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
@@ -220,7 +231,7 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
 
                     /* prevent logging AJAX calls to static and inline files, like templates */
                     if (url.substr(0, 1) === '/' && !url.match(new RegExp(\"";
-            // line 198
+            // line 209
             echo twig_escape_filter($this->env, (isset($context["excluded_ajax_paths"]) ? $context["excluded_ajax_paths"] : $this->getContext($context, "excluded_ajax_paths")), "html", null, true);
             echo "\"))) {
                         var stackElement = {
@@ -253,7 +264,7 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
             }
         ";
         }
-        // line 228
+        // line 239
         echo "
         return {
             hasClass: hasClass,
@@ -294,9 +305,7 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
             },
 
             toggle: function(selector, elOn, elOff) {
-                var i,
-                    style,
-                    tmp = elOn.style.display,
+                var tmp = elOn.style.display,
                     el = document.getElementById(selector);
 
                 elOn.style.display = elOff.style.display;
@@ -313,7 +322,7 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
 /*]]>*/</script>
 ";
         
-        $__internal_6a5e86af57a73f2f96513217e490225b5d2a5181cfcda6b6acbc2512257ece70->leave($__internal_6a5e86af57a73f2f96513217e490225b5d2a5181cfcda6b6acbc2512257ece70_prof);
+        $__internal_400a0ccbdfac7799f3715b361c7cd49eac5a58dd07318d172893263deba864d0->leave($__internal_400a0ccbdfac7799f3715b361c7cd49eac5a58dd07318d172893263deba864d0_prof);
 
     }
 
@@ -329,6 +338,6 @@ class __TwigTemplate_d9ceef968db2f357d941cbf854331d9a04820c521bd01db10c6795bae0d
 
     public function getDebugInfo()
     {
-        return array (  257 => 228,  224 => 198,  215 => 191,  213 => 190,  22 => 1,);
+        return array (  268 => 239,  235 => 209,  226 => 202,  224 => 201,  22 => 1,);
     }
 }

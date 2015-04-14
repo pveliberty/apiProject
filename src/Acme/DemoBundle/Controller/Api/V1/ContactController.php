@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
  */
 class ContactController extends RestGetController
 {
+
     /**
      * List all Contacts.
      *
@@ -217,7 +218,7 @@ class ContactController extends RestGetController
     }
 
     /**
-     * @return string
+     * @return null
      */
     protected function getEntityName(){
         return 'contact';

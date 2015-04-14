@@ -38,7 +38,7 @@ class WebHookListener implements EventSubscriberInterface
         'Acme\DemoBundle\Entity\Address' => [
             'Listener' => 'Acme\DemoBundle\Doctrine\Listener\Entity\AddressListener',
             'Transformer' => 'Acme\DemoBundle\Transformer\Api\V1\ContactTransformer',
-            'Embed' => ['addresses', 'rights'],
+            'Embed' => ['contact', 'rights'],
             'CallBackMethod' => 'getContact',
             'Action'   => [
                 Events::postPersist => 'postPersist',
@@ -127,8 +127,10 @@ class WebHookListener implements EventSubscriberInterface
                     $transformer = new $classTransformer($this->entityManager);
                     $this->fractal->parseIncludes($this->getConfigByKey($config, 'Embed', []));
                     $resource     = new Item($object, $transformer);
-                    $rootScope    = $this->fractal->createData($resource);
-                    $dataResponse = array_merge($dataResponse, $rootScope->toArray());
+                    $rootScope = $this->fractal->createData($resource);
+                    $data[$transformer->getCurrentResourceKey()] = $rootScope->toArray();
+                    $this->logger->debug(new JsonResponse($data));
+                    $dataResponse = array_merge($dataResponse, $data);
                 }
             } catch (\Exception $ex) {
                 $this->logger->alert($ex->getMessage());
@@ -138,7 +140,7 @@ class WebHookListener implements EventSubscriberInterface
         if (!empty($dataResponse)) {
             $clientRequest = $this->client->createRequest('POST', 'http://tignes.redpill.e-liberty.fr/');
             $clientRequest->setHeader('Content-Type', 'application/json');
-//            $this->logger->alert($dataResponse);
+
             $clientRequest->setBody(new JsonResponse($dataResponse));
             $response = $this->client->send($clientRequest);
         }
@@ -217,7 +219,7 @@ class WebHookListener implements EventSubscriberInterface
         $config = $this->getConfiguration($event->getLifecycleEventArgs()->getEntity());
         $callBackMethod = $this->getConfigByKey($config, 'CallBackMethod');
         if (null !== $callBackMethod) {
-            return $event->getLifecycleEventArgs()->getEntity().$callBackMethod;
+            return call_user_func([$event->getLifecycleEventArgs()->getEntity(), $callBackMethod]);
         }
 
         return $event->getLifecycleEventArgs()->getEntity();
